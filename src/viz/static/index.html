@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yuu's Robots</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">
+          <span class="logo-icon"></span>
+          <h1>Yuu's Robots</h1>
+        </div>
+        <span class="subtitle">ReAct Agent</span>
+      </div>
+      <div class="status-bar">
+        <span class="status-indicator" id="wsDot">
+          <span class="pulse"></span>
+        </span>
+        <span id="wsStatus">CONNECTING</span>
+        <span class="sep"></span>
+        <span class="state-badge" id="agentStateBadge">IDLE</span>
+        <span class="state-detail" id="agentDetail">waiting...</span>
+        <span class="sep"></span>
+        <label class="deep-research-toggle" title="Toggle Deep Research Mode">
+          <span class="toggle-label">DEEP</span>
+          <input type="checkbox" id="deepResearchToggle" onchange="toggleDeepResearch()">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </header>
+
+    <div class="dashboard">
+      <!-- LEFT: Conversation (top) + Canvas (bottom) -->
+      <div class="left-panel">
+        <div class="panel conversation-panel">
+          <div class="panel-header">对话 Conversation</div>
+          <div class="panel-body" id="conversationList">
+            <div class="panel-empty">等待消息...</div>
+          </div>
+        </div>
+        <div class="plan-section" id="planSection" style="display: none;">
+          <div class="plan-section-header" onclick="togglePlanSection()">
+            <span>Research Plan</span>
+            <span class="plan-toggle-icon" id="planToggleIcon">&#9660;</span>
+          </div>
+          <div class="plan-section-body" id="planDisplay">
+            <div class="panel-empty">No active research plan</div>
+          </div>
+        </div>
+        <div class="canvas-section">
+          <canvas id="roomCanvas" width="720" height="480"></canvas>
+        </div>
+      </div>
+
+      <!-- RIGHT: Tab panels -->
+      <div class="right-panel">
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="tools" onclick="switchTab('tools')">执行日志 Tools</button>
+          <button class="tab-btn" data-tab="reasoning" onclick="switchTab('reasoning')">思考过程 Reasoning</button>
+          <button class="tab-btn" data-tab="reminders" onclick="switchTab('reminders')">提醒任务 Reminders</button>
+          <button class="tab-btn" data-tab="memories" onclick="switchTab('memories')">长期记忆 Memories</button>
+          <button class="tab-btn" data-tab="persona" onclick="switchTab('persona')">人格配置 Persona</button>
+        </div>
+
+        <!-- Tab: 执行日志 — Agent 调用了哪些工具，输入/输出是什么 -->
+        <div class="tab-content active" id="tab-tools">
+          <div class="panel-body" id="toolCallList">
+            <div class="panel-empty">Agent 执行的工具调用将在此显示</div>
+          </div>
+        </div>
+
+        <!-- Tab: 思考过程 — Agent 内部推理步骤（为什么调用某个工具） -->
+        <div class="tab-content" id="tab-reasoning">
+          <div class="panel-body" id="thinkingList">
+            <div class="panel-empty">Agent 的推理过程将在此显示</div>
+          </div>
+        </div>
+
+        <!-- Tab: 提醒任务 — 已创建的提醒列表 -->
+        <div class="tab-content" id="tab-reminders">
+          <div class="panel-body" id="reminderList">
+            <div class="panel-empty">暂无提醒任务</div>
+          </div>
+        </div>
+
+        <!-- Tab: 长期记忆 — 按分类展示所有记忆 -->
+        <div class="tab-content" id="tab-memories">
+          <div class="memories-toolbar">
+            <select id="memoryStatusFilter" class="memory-select" onchange="loadMemories()">
+              <option value="active">Active</option>
+              <option value="outdated">Outdated</option>
+              <option value="completed">Completed</option>
+              <option value="">All</option>
+            </select>
+            <button class="memory-load-btn" onclick="loadMemories()">REFRESH</button>
+          </div>
+          <div class="panel-body" id="memoryList">
+            <div class="panel-empty">Loading...</div>
+          </div>
+        </div>
+
+        <!-- Tab: 人格配置 — SOUL/AGENTS/USER.md 编辑 -->
+        <div class="tab-content" id="tab-persona">
+          <div class="panel-body persona-body" id="personaContent">
+            <div class="panel-empty">Loading persona...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="app.js?v=2"></script>
+</body>
+</html>

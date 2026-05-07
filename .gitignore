@@ -1,0 +1,40 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Runtime data (not tracked)
+logs/
+data/
+*.db
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+*.log.*
+
+# IDE
+.claude/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+nul
+
+# Personal documents & notes (not code)
+docs/
+
+# uv lock (optional — keep if you want reproducible installs)
+# uv.lock
